@@ -1,21 +1,27 @@
 from rest_framework import serializers
 
-from .category import CategorySerializer
-from .tag import TagSerializer
-from core.models import Post
+
+from core.models import Post, Category, Tag
 
 
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
-    categories = CategorySerializer(many=True, read_only=True)
-    tags = TagSerializer(many=True, read_only=True)
+    categories = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Category.objects.all()
+    )
+    tags = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Tag.objects.all()
+    )
 
     class Meta:
         model = Post
         fields = [
-            'id', 'title', 'slug', 'author', 'categories', 'tags',
-            'content', 'status', 'views_count', 'created_at', 'updated_at'
+            'id', 'title', 'slug', 'author',
+            'categories', 'tags','content',
+            'status', 'views_count', 'created_at', 'updated_at'
         ]
         read_only_fields = [
             'id', 'slug', 'author', 'status',

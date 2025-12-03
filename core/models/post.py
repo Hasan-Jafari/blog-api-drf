@@ -25,7 +25,7 @@ class Post(BaseModel):
         Category,
         related_name='posts'
     )
-    tag = models.ManyToManyField(
+    tags = models.ManyToManyField(
         Tag,
         related_name='posts'
     )
