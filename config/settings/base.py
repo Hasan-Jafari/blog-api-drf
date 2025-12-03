@@ -1,6 +1,7 @@
 import os
 import environ
 from pathlib import Path
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     
     # 3rd party packages
     'rest_framework',
+    "corsheaders",
     
     # local apps
     'accounts.apps.AccountsConfig',
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -112,4 +115,29 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
 }
+
+
+CORS_ALLOW_ALL_ORIGINS = True # --> just in dev.
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # --> just in dev.
+    # "https://your.domain.com",
+]
+
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "x-phone",
+]
