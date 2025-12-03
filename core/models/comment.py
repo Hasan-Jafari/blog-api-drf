@@ -20,7 +20,3 @@ class Comment(BaseModel):
     )
     content = models.TextField()
     approved = models.BooleanField(default=True)
-        
-    # def __str__(self):
-    #     return self.
-    
