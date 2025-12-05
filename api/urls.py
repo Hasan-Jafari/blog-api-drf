@@ -7,4 +7,5 @@ urlpatterns = [
     path('category/', include('api.endpoints.category', namespace='category')),
     path('post/', include('api.endpoints.post', namespace='post')),
     path('tag/', include('api.endpoints.tag', namespace='tag')),
+    path('auth/', include('api.endpoints.auth', namespace='auth')),
 ]

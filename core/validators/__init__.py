@@ -1,1 +1,2 @@
-from .phone_number_validator import validate_phone_number
+from .phone_number_validator import validate_phone_numberfrom .phone_number_validator import validate_phone_number
+from .password_validator import validate_password

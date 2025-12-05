@@ -37,3 +37,4 @@ class PostSerializer(serializers.ModelSerializer):
         if len(value.strip()) < 20:
             raise serializers.ValidationError('Content is too short.')
         return value
+        return value

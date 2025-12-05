@@ -13,6 +13,7 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
     pagination_class = CustomPaginator
     permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def posts(self, request, pk=None):
@@ -22,6 +23,7 @@ class CategoryViewSet(ModelViewSet):
             .filter(categories=category)
             .select_related('author')
             .prefetch_related('categories', 'tag')
+            .prefetch_related('categories', 'tags')
         )
         page = self.paginate_queryset(posts)
         serializer = PostSerializer(page, many=True)

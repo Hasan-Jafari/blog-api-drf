@@ -15,6 +15,13 @@ class Category(BaseModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title, allow_unicode=True)
+            slug = slugify(self.title, allow_unicode=True)
+            slugy = slug
+            slug_num = 1
+            while Category.objects.filter(slug=slug).exists():
+                slug = f'{slugy}-{slug_num}'
+                slug_num += 1
+            self.slug = slug
         super().save(*args, **kwargs)
     
     def __str__(self):

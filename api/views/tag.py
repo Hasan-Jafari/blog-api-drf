@@ -2,15 +2,18 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+
 from core.models import Tag, Post
 from core.serializers import TagSerializer, PostSerializer
 from core.paginations import CustomPaginator
+
 
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     pagination_class = CustomPaginator
     permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     @action(detail=True, methods=['get'])
     def posts(self, request, pk=None):
@@ -20,6 +23,7 @@ class TagViewSet(ModelViewSet):
             .filter(tag=tag)
             .select_related('author')
             .prefetch_related('categories', 'tag')
+            .prefetch_related('categories', 'tags')
         )
         page = self.paginate_queryset(posts)
         serializer = PostSerializer(page, many=True)

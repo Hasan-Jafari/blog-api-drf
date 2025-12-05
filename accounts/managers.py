@@ -20,6 +20,7 @@ class UserManager(BaseUserManager):
         
         user.is_staff = False
         user.is_active = False
+        user.is_active = True
         user.is_superuser = False
         user.save(using=self._db)
         return user

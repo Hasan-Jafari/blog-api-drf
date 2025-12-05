@@ -11,6 +11,7 @@ class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
     pagination_class = CustomPaginator
     permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         post_id = self.kwargs.get('post_pk')

@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 
 app_name = 'post'
 router.register(r'', PostViewSet, basename='post')
+router.register('', PostViewSet, basename='post')
 
 posts_router = routers.NestedDefaultRouter(router, r'', lookup='post')
 posts_router.register(r'comments', CommentViewSet, basename='post-comments')
